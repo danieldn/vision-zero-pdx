@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2></h2>
+    Generating real time data reports for Slack...
+</br>
+</br>
+    Install the Vision Zero PDX app in your Slack workspace.
+</br>
+</br>
+
+    <form method="POST" enctype="multipart/form-data">
+
+        <div  style="width: 200px; font-family: Montserrat;">
+          <label for="title">Street Name</label>
+          <input type="text" name="name" id="name" class="form-control"/>
+        </div>
+        
+        <div  style="width: 200px; font-family: Montserrat;">
+          <label for="title">Safety Level (Low, Med, High)</label>
+          <input type="text" name="name" id="name" class="form-control"/>
+        </div>
+
+        <div  style="width: 200px; font-family: Montserrat;">
+          <label for="title">Frequency (Mins)</label>
+          <input type="text" name="name" id="name" class="form-control"/>
+        </div>
+      
+    </form>
+</br>
+</br>
+    <a href='/real-time-report2' button class="btn btn-success">Submit</a>
+
+{% endblock %}

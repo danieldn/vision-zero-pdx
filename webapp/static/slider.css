@@ -173,25 +173,6 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-#bulb {
-	height: 100px;
-	width: 100px;
-	margin: auto;
-	background-position: center;
-	background-repeat: no-repeat;
-}
-
-.bulb-on {
-	background-image: url('electric-light-bulb-yellow.png');
-}
-
-.bulb-off {
-	background-image: url('electric-light-bulb.png');
-}
-
-.light {
-	background-color: #484848;
-}
 
 #chart_div {
 	margin: 1em auto;
@@ -213,6 +194,13 @@ footer {
 	margin: 0.5em 0;
   color: #FFFFFF;
 }
+
+.item2 {
+	/* width: 600px;  */
+	/* height: 200px; */
+	object-fit: contain
+}
+
 
 @media only screen and (max-width: 800px) {
   .navbar {
@@ -242,6 +230,7 @@ footer {
 	.item > img {
 		min-height: 95vh;
 	}
+
 
 	#commentBox {
 		padding-top: 5em;

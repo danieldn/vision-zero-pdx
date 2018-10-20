@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <link href="/static/slider.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-    <script src="/static/lights.js"></script>
+    <!-- <script src="/static/lights.js"></script> -->
     <title>Vision Zero PDX</title>
 </head>
 <body>
@@ -92,24 +92,9 @@
 <div id="graphSection">
   <div id="commentBox">
     <h1>Portland's Traffic Data</h1>
-    <!-- <div class="switchBox"> -->
-      <!-- <h3></h3> -->
-      <!-- Rounded switch -->
-      <!-- <label class="switch"> -->
-        <!-- <input type="checkbox" class="checkbox"> -->
-        <!-- <span class="slider"></span> -->
-      <!-- </label> -->
-    <!-- </div> -->
-    <!-- <div id="bulb"></div> -->
   </div>
   <!-- Google graph -->
   <div id="chart_div"></div>
-
-  <footer>
-    <small>&copy;
-      <script type="text/javascript">
-        document.write(new Date().getFullYear());
-      </script>
       <script>
             google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
@@ -149,6 +134,21 @@
           });
         }
       </script>
+    </div>
+
+    <div id="commentBox">
+      <h1>Combining Real Time Data with Collaboration Tools</h1>
+      <div class="item2">
+        <img src="/static/pdx-slack-vz.png">
+        <a href="/real-time-report" class="btn btn-success">Start Real-Time Data
+        with Slack!</a>
+        <!-- <button type="button" class="btn btn-success" ahref>Try our Slack App!</button> -->
+      </div>
+    </div>
+
+
+  <footer>
+    <small>&copy;
       &nbsp;Technology Association of Oregon. Fall 2018 Hackathon</small>
   </footer>
 </div>
