@@ -6,6 +6,7 @@
 # the dependencies bundled in.
 install.packages(c(
   "tidyverse",
+  "tmap",
   "sf",
   "sp"),
   quiet = TRUE)

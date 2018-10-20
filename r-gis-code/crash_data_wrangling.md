@@ -7,14 +7,14 @@ Crash Data Wrangling
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ──────────────────────────────────────────── tidyverse 1.2.1 ──
+    ## ── Attaching packages ────────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
     ## ✔ tibble  1.4.2     ✔ dplyr   0.7.7
     ## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
     ## ✔ readr   1.1.1     ✔ forcats 0.3.0
 
-    ## ── Conflicts ─────────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ───────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
 
@@ -27,34 +27,66 @@ library(sf)
 
 ``` r
 raw_data <- read_csv(
-  "~/Projects/vision-zero-pdx/FilteredLessColumnsFullWithCalc.csv",
-  col_types = cols(
-    CRASH_DT = col_date(format = "%m/%d/%Y %H:%M"),
-    LAT = col_double(),
-    LON = col_double()
-  )
-)
-```
-
-## Compute day of week
-
-We use the `lubridate::wday` function to compute the day of the week,
-since it’s not in the raw data. Note that `lubridate` uses the
-convention: 1 means Sunday and 7 means Saturday.
-
-``` r
-spatial_data <- 
-  raw_data %>% mutate(WDAY = lubridate::wday(CRASH_DT))
+  "~/Projects/vision-zero-pdx/ourStreets_wXY.csv",
+  col_types = cols(CRASH_DT = col_date(format = "%m/%d/%Y %H:%M")))
 ```
 
 ## Make a simple features (`sf` package) data frame
 
+### Figuring out the coordinate reference system:
+
+1.  The documentation (`PBOT_Readme_02092018.docx`) says:
+    
+    ODOT began providing XY crash locations in 2007, but prior to 2011,
+    ODOT did not provide reliable LAT/LONG values in the dataset.
+    Therefore, the XY coordinates were derived by PBOT from the ODOT
+    intersection description, the direction indicated from the
+    intersection, and distance values provided by ODOT. Since then, ODOT
+    has greatly improved positional accuracy, and PBOT staff’s geocoding
+    is limited to converting ODOT’s LAT/LONG values to the State Plane
+    coordinate system, then finding the closest intersection that best
+    matches ODOT’s intersection description. For the 2005/2006 years you
+    can find an approximate location in the CRASH\_X and CRASH\_Y fields
+    of the Crash table (coordinates are in NAD 1983 HARN State Plane
+    Oregon North FIPS 3601 Feet Intl; SR-ORG:6856) and you should
+    consider using those values through 2010.
+
+2.  So we go to Google, which sends us to
+    <http://spatialreference.org/ref/sr-org/6856/>.
+
+3.  There we download the `.prj` file (`6856.prj`).
+
+4.  Then we go to <http://prj2epsg.org/search> and upload the file.
+
+5.  Magic happens and we find the EPSG number is 2913\!
+
+<!-- end list -->
+
 ``` r
 spatial_data <- SpatialPointsDataFrame(
-  coords = select(spatial_data, LON, LAT),
-  data = select(spatial_data, CRASH_ID:WDAY),
-  proj4string = CRS("+init=epsg:4326")
-) %>% st_as_sf()
+  coords = select(raw_data, CRASH_X, CRASH_Y),
+  data = select(raw_data, CRASH_ID:CL_STREET2),
+  proj4string = CRS("+init=epsg:2913")
+)
+```
+
+### Transform coordinates to EPSG:4326
+
+GeoJSON needs the data to be in EPSG:4326 coordinates (latitude and
+longitude).
+
+``` r
+spatial_data <- spTransform(spatial_data, CRS("+init=epsg:4326")) %>% 
+  st_as_sf()
+```
+
+### Filter out bogus points
+
+There are some rows with `CRASH_X` and `CRASH_Y` both zero. Get rid of
+them\!
+
+``` r
+spatial_data <- spatial_data %>% filter(CRASH_X > 0, CRASH_Y > 0)
 ```
 
 ## Save as GeoJSON
@@ -65,6 +97,16 @@ st_write(spatial_data, "crash_spatial.geojson")
 ```
 
     ## Writing layer `crash_spatial' to data source `crash_spatial.geojson' using driver `GeoJSON'
-    ## features:       81983
-    ## fields:         10
+    ## features:       5845
+    ## fields:         39
     ## geometry type:  Point
+
+## Map it\!
+
+(uncomment when running interactively)
+
+``` r
+# library(tmap)
+# tmap_mode("view")
+# qtm(spatial_data)
+```
