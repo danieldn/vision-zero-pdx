@@ -11,8 +11,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <link href="/static/slider.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-    <script src="/static/lights.js"></script>
+    <!-- <script src="/static/lights.js"></script> -->
     <title>Vision Zero PDX</title>
+<style>.embed-container {position: relative; padding-bottom: 80%; height: 0; max-width: 100%;} .embed-container iframe, .embed-container object, .embed-container iframe{position: absolute; top: 0; left: 0; width: 100%; height: 100%;} small{position: absolute; z-index: 40; bottom: 0; margin-bottom: -15px;}</style>
 </head>
 <body>
   <nav class="navbar navbar-inverse navbar-static-top">
@@ -45,7 +46,7 @@
     <li data-target="#energySlider" data-slide-to="0" class="active"></li>
     <li data-target="#energySlider" data-slide-to="1"></li>
     <li data-target="#energySlider" data-slide-to="2"></li>
-    <li data-target="#energySlider" data-slide-to="3"></li>
+    <!-- <li data-target="#energySlider" data-slide-to="3"></li> -->
   </ol>
 
   <!-- Wrapper for slides -->
@@ -85,58 +86,41 @@
     </a>
   </div>
 </div>
+<div class="embed-container"><iframe width="500" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" title="Vision Zero" src="//hackforacause.maps.arcgis.com/apps/Embed/index.html?webmap=e75b3cc533b44523a38cca15b204791b&extent=-122.6772,45.4603,-122.4664,45.5324&zoom=true&previewImage=false&scale=true&disable_scroll=true&theme=light"></iframe></div>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <div id="graphSection">
   <div id="commentBox">
-    <h1>Portland's Historic Traffic Data</h1>
-    <!-- <div class="switchBox"> -->
-      <!-- <h3></h3> -->
-      <!-- Rounded switch -->
-      <!-- <label class="switch"> -->
-        <!-- <input type="checkbox" class="checkbox"> -->
-        <!-- <span class="slider"></span> -->
-      <!-- </label> -->
-    <!-- </div> -->
-    <!-- <div id="bulb"></div> -->
+    <h1>Portland's Traffic Data</h1>
   </div>
   <!-- Google graph -->
   <div id="chart_div"></div>
-
-  <footer>
-    <small>&copy;
-      <script type="text/javascript">
-        document.write(new Date().getFullYear());
-      </script>
       <script>
             google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
 
-
         function drawChart() {
           var data = google.visualization.arrayToDataTable([
-            ['Months', 'Motion', 'No Motion'],
-            ['Jan',  47,      94],
-            ['Feb',  80,      170],
-            ['Mar',  112,       250],
-            ['Apr',  152,      312],
-            ['May',  180,      365],
-            ['Jun',  215,      400],
-            ['Jul',  240,      435],
-            ['Aug',  285,      470],
-            ['Sep',  319,      565],
-            ['Oct',  350,     650],
-            ['Nov',  390,     720],
-            ['Dec',  440,     814],
-
+            ['Months', 'Under 20'],
+            ['Jan',  440],
+            ['Feb',  390],
+            ['Mar',  350],
+            ['Apr',  319],
+            ['May',  285],
+            ['Jun',  240],
+            ['Jul',  215],
+            ['Aug',  180],
+            ['Sep',  152],
+            ['Oct',  112],
+            ['Nov',  80],
+            ['Dec',  47],
           ]);
 
-
-
           var options = {
-            title: 'Number of Accidents Over Time',
-            hAxis: {title: 'Months',  titleTextStyle: {color: '#333'}, slantedText:false, slantedTextAngle:90 },
-            vAxis: {title: 'Cost', minValue: 0},
-            backgroundColor: '#222222',
+            title: 'Projected accidents with Vision Zero initiatives in place',
+            hAxis: {title: 'Months',  titleTextStyle: {color: '#222222'}, slantedText:false, slantedTextAngle:90 },
+            vAxis: {title: 'Accidents', minValue: 0},
+            // backgroundColor: '#222222',
+            backgroundColor: '#ffffff',
           };
 
           var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
@@ -148,11 +132,27 @@
               }, 1500);
           });
         }
-
       </script>
+    </div>
+
+    <div id="commentBox">
+      <h1>Combining Real Time Data with Collaboration Tools</h1>
+      <div class="item2">
+        <img src="/static/pdx-slack-vz.png">
+        <a href="/real-time-report" class="btn btn-success">Start Real-Time Data
+        with Slack!</a>
+        <!-- <button type="button" class="btn btn-success" ahref>Try our Slack App!</button> -->
+      </div>
+    </div>
+
+
+  <footer>
+    <small>&copy;
       &nbsp;Technology Association of Oregon. Fall 2018 Hackathon</small>
   </footer>
 </div>
+
+
 <!-- JQuery Slider -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.8.3/jquery.csv.js"></script>
 <!-- Bootstrap latest compiled and minified JavaScript -->
