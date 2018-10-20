@@ -90,7 +90,7 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
-</div>
+
 <div id=commentBox>
 </br>
 </br>
@@ -103,8 +103,51 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <div id="graphSection">
   <div id="commentBox">
-    <h1>Portland's Traffic Data</h1>
+  </br>
+  </br>
+    <h1>Learning from Portland's Traffic Data</h1>
+  </br>
+  </br>
   </div>
+
+
+
+  <div id="chart_div" >
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ["Factor", "Rank"],
+        ["speed", 11.7],
+        ["nRd", 9.3],
+        ["region", 7.8],
+        ["ped", 7.3],
+        ["pcar", 7.0],
+        ["Rtype", 6.7],
+        ["Rcond", 6.3],
+        ["mcar", 6.1],
+        ["weather", 6.0],
+      ]);
+      
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1]);
+
+      var options = {
+        title: "Aggregate Feature Selection Based on Various Models",
+        width: 600,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+      chart.draw(view, options);
+  }
+  </script>
+  </div>
+<div id="columnchart_values" style="width: 900px; height: 300px;"></div>
   <!-- Google graph -->
   <div id="chart_div"></div>
       <script>
@@ -149,7 +192,11 @@
     </div>
 
     <div id="commentBox">
+    </br>
+    </br>
       <h1>Combining Real Time Data with Collaboration Tools</h1>
+    </br>
+    </br>
       <div class="item2">
         <img src="/static/pdx-slack-vz.png">
         <a href="/real-time-report" class="btn btn-success">Start Real-Time Data
