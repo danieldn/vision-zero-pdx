@@ -1,0 +1,11 @@
+{
+    "text": "Welcome to Vision Zero PDX! Try some commands",
+    "attachments": [
+        {
+            "text":"/vzhelp"
+        },
+        {
+            "text":"/vzreport"
+        }
+    ]
+}

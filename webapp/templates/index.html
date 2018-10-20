@@ -45,7 +45,7 @@
     <li data-target="#energySlider" data-slide-to="0" class="active"></li>
     <li data-target="#energySlider" data-slide-to="1"></li>
     <li data-target="#energySlider" data-slide-to="2"></li>
-    <li data-target="#energySlider" data-slide-to="3"></li>
+    <!-- <li data-target="#energySlider" data-slide-to="3"></li> -->
   </ol>
 
   <!-- Wrapper for slides -->
@@ -85,10 +85,13 @@
     </a>
   </div>
 </div>
+<div>
+  <iframe width="100%" height="800px" src="https://pdx.maps.arcgis.com/apps/MapSeries/index.html?appid=47c2153a3fa84636bb63e25b451372d0" frameborder="0" scrolling="no"></iframe>
+</div>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <div id="graphSection">
   <div id="commentBox">
-    <h1>Portland's Historic Traffic Data</h1>
+    <h1>Portland's Traffic Data</h1>
     <!-- <div class="switchBox"> -->
       <!-- <h3></h3> -->
       <!-- Rounded switch -->
@@ -111,32 +114,29 @@
             google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
 
-
         function drawChart() {
           var data = google.visualization.arrayToDataTable([
-            ['Months', 'Motion', 'No Motion'],
-            ['Jan',  47,      94],
-            ['Feb',  80,      170],
-            ['Mar',  112,       250],
-            ['Apr',  152,      312],
-            ['May',  180,      365],
-            ['Jun',  215,      400],
-            ['Jul',  240,      435],
-            ['Aug',  285,      470],
-            ['Sep',  319,      565],
-            ['Oct',  350,     650],
-            ['Nov',  390,     720],
-            ['Dec',  440,     814],
-
+            ['Months', 'Under 20'],
+            ['Jan',  440],
+            ['Feb',  390],
+            ['Mar',  350],
+            ['Apr',  319],
+            ['May',  285],
+            ['Jun',  240],
+            ['Jul',  215],
+            ['Aug',  180],
+            ['Sep',  152],
+            ['Oct',  112],
+            ['Nov',  80],
+            ['Dec',  47],
           ]);
 
-
-
           var options = {
-            title: 'Number of Accidents Over Time',
-            hAxis: {title: 'Months',  titleTextStyle: {color: '#333'}, slantedText:false, slantedTextAngle:90 },
-            vAxis: {title: 'Cost', minValue: 0},
-            backgroundColor: '#222222',
+            title: 'Projected accidents with Vision Zero initiatives in place',
+            hAxis: {title: 'Months',  titleTextStyle: {color: '#222222'}, slantedText:false, slantedTextAngle:90 },
+            vAxis: {title: 'Accidents', minValue: 0},
+            // backgroundColor: '#222222',
+            backgroundColor: '#ffffff',
           };
 
           var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
@@ -148,11 +148,12 @@
               }, 1500);
           });
         }
-
       </script>
       &nbsp;Technology Association of Oregon. Fall 2018 Hackathon</small>
   </footer>
 </div>
+
+
 <!-- JQuery Slider -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.8.3/jquery.csv.js"></script>
 <!-- Bootstrap latest compiled and minified JavaScript -->
