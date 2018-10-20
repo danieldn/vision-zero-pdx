@@ -7,3 +7,44 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Read the data
+```{r}
+library(tidyverse)
+library(sp)
+library(sf)
+raw_data <- read_csv(
+  "~/Projects/vision-zero-pdx/FilteredLessColumnsFullWithCalc.csv",
+  col_types = cols(
+    CRASH_DT = col_date(format = "%m/%d/%Y %H:%M"),
+    LAT = col_double(),
+    LON = col_double()
+  )
+)
+```
+
+## Compute day of week
+We use the `lubridate::wday` function to compute the day of the week, since it's not in the raw data. Note that `lubridate` uses the convention: 1 means Sunday and 7 means Saturday.
+```{r}
+spatial_data <- 
+  raw_data %>% mutate(WDAY = lubridate::wday(CRASH_DT))
+```
+
+## Make a simple features (`sf` package) data frame
+```{r}
+spatial_data <- SpatialPointsDataFrame(
+  coords = select(spatial_data, LON, LAT),
+  data = select(spatial_data, CRASH_ID:WDAY),
+  proj4string = CRS("+init=epsg:4326")
+) %>% st_as_sf()
+```
+
+## Save as GeoJSON
+```{r}
+unlink("crash_spatial.geojson") # `st_write` won't over-write a file
+st_write(spatial_data, "crash_spatial.geojson")
+```
+
+
+  
+
+  
