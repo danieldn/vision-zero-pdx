@@ -1,0 +1,98 @@
+---
+title: "Untitled"
+author: "Chen Zhao"
+date: "2018/10/19"
+output: html_document
+---
+
+```{r}
+set.seed(1)
+n<-10000
+sev<-as.factor(sample(0:1,n,replace=T))
+fatal<-sample(0:3,n,replace=T)
+injury<-sample(1:3,n,replace=T)
+speed<-sample(20:50,n,replace=T)
+mcar<-sample(1:8,n,replace=T)
+pcar<-sample(0:5,n,replace=T)
+ped<-sample(2:10,n,replace=T)
+nRd<-sample(2:5,n,replace=T)
+nlane<-sample(1:3,n,replace=T)
+t<-as.factor(sample(0:2,n,replace=T))
+Rtype<-as.factor(sample(0:1,n,replace=T))
+weather<-as.factor(sample(0:2,n,replace=T))
+Rcond<-as.factor(sample(0:1,n,replace=T))
+Region<-as.factor(sample(0:2,n,replace=T))
+side<-as.factor(sample(0:2,n,replace=T))
+
+
+```
+
+```{r}
+library(ggplot2) 
+library(rpart)
+library(rattle)
+library(randomForest)
+library(xgboost)
+library(rotationForest)
+library(corrplot)
+library(caret)
+library(e1071)
+library(plyr)
+library(mgcv)
+library(pROC)
+library(gridExtra)
+library(rminer)
+
+```
+
+```{r}
+data_g<-data.frame(sev,fatal,injury,speed,mcar,pcar,ped,nRd,t,nlane,Rtype,weather,Rcond,Region,side)
+```
+
+```{r}
+train.flag <- createDataPartition(y=data_g$sev,p=0.8,list=FALSE)
+train<- data_g[train.flag,]
+test<-data_g[-train.flag,]
+```
+
+```{r}
+modfit1 <- train(sev~.,method="rpart",data=train) 
+fancyRpartPlot(modfit1$finalModel)
+test.cart<-predict(modfit1,newdata=test)
+importance <- varImp(modfit1, scale=FALSE)
+# summarize importance
+print(importance)
+```
+```{r}
+modfit2<-randomForest(sev~.,data=train, ntree=500,mtry=5,importance=T)
+imp1<-modfit2$importance
+sort(imp1[,4],decreasing=TRUE)
+```
+
+```{r}
+modfit3 <- xgboost(data=data.matrix(train[,-1]),label=as.numeric(train$sev)-1,objective ="binary:logistic",max_depth=7,nrounds=25)
+xgb.importance(model = modfit3)
+```
+
+```{r}
+
+modfit4<-fit(sev~., data=train, model="svm", kpar=list(sigma=0.10), C=10)
+imp<-Importance(modfit4, data=train)$imp
+isvm<-data.frame(colnames(data_g),imp)
+isvm[order(isvm$imp),]
+
+```
+```{r}
+modfit5<-glm(sev~.,family='binomial',data=train)
+summary(modfit5)
+imp5<-varImp(modfit5, scale = FALSE)
+ilog<-data.frame(rownames(imp5),imp5)
+ilog[order(ilog$Overall),]
+```
+```{r}
+modfit6<-fit(sev~., data=train, model="naiveBayes")
+imp6<-Importance(modfit6, data=train)$imp
+inb<-data.frame(colnames(data_g),imp6)
+inb[order(inb$imp),]
+```
+
