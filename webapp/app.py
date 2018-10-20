@@ -47,11 +47,9 @@ def report():
 
 @app.route('/real-time-report')
 def real_time_report():
-
-    with open('slack/real-time-report.json') as json_data:
-        js = json.load(json_data)
-        requests.post('https://hooks.slack.com/services/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', json=js)
-
+    # with open('slack/real-time-report.json') as json_data:
+        # js = json.load(json_data)
+        # requests.post('https://hooks.slack.com/services/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', json=js)
     return render_template('slack.html')
 
 @app.route('/real-time-report2')

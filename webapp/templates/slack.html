@@ -1,27 +1,36 @@
 {% extends "base.html" %}
 {% block content %}
     <h2></h2>
-    Generating real time data reports for Slack...
+    Gathering real time data reports...
 </br>
 </br>
-    Install the Vision Zero PDX app in your Slack workspace.
+    Install the Vision Zero PDX app in your Slack workspace to receive.
 </br>
 </br>
 
     <form method="POST" enctype="multipart/form-data">
+        <div  style="width: 200px; font-family: Montserrat;">
+          <label for="title">Channel</label>
+          <input type="text" name="name" id="name" class="form-control"/>
+        </div>
 
         <div  style="width: 200px; font-family: Montserrat;">
-          <label for="title">Street Name</label>
-          <input type="text" name="name" id="name" class="form-control"/>
+        </br>
+            <label for="title">Event
+        </br>
+                <select name="Events">
+                        <option value="PEDEVT">PEDEVT</option>
+                        <option value="PKIN">PKIN</option>
+                        <option value="PKOUT">PKOUT</option>
+                      </select>
+            </label>
+          <!-- <label for="title">Event (e.g. PEDEVT)</label> -->
+          <!-- <input type="text" name="name" id="name" class="form-control"/> -->
         </div>
         
         <div  style="width: 200px; font-family: Montserrat;">
-          <label for="title">Safety Level (Low, Med, High)</label>
-          <input type="text" name="name" id="name" class="form-control"/>
-        </div>
-
-        <div  style="width: 200px; font-family: Montserrat;">
-          <label for="title">Frequency (Mins)</label>
+        </br>
+          <label for="title">Frequency (Sec)</label>
           <input type="text" name="name" id="name" class="form-control"/>
         </div>
       
