@@ -1,6 +1,6 @@
 # Vision Zero PDX
 
-Winner of Hack for a Cause - 2018 Hackathon by the Technology Association of Oregon
+Winner of [Hack for a Cause - 2018 Hackathon](http://www.techoregon.org/events/hack-cause-0) by the Technology Association of Oregon
 
 ## Problem Statement
 
